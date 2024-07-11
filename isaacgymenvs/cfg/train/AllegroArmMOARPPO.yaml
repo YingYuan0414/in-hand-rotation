@@ -1,0 +1,111 @@
+params:
+  seed: ${...seed}
+
+  algo:
+    name: a2c_continuous
+
+  model:
+    name: continuous_a2c_logstd
+
+  network:
+    name: actor_critic
+    separate: False
+    pointnet: small  
+
+    space:
+      continuous:
+        mu_activation: None
+        sigma_activation: None
+        mu_init:
+          name: default
+        sigma_init:
+          name: const_initializer
+          val: 0
+        fixed_sigma: True
+
+    mlp:
+      units: [512, 256, 256]
+      activation: elu
+      d2rl: False
+
+      initializer:
+        name: default
+      regularizer:
+        name: None
+
+  load_checkpoint: ${if:${...checkpoint},True,False} # flag which sets whether to load the checkpoint
+  load_path: ${...checkpoint} # path to the checkpoint to load
+
+  config:
+    name: ${resolve_default:AllegroArmMOA,${....experiment}}
+    env_name: rlgpu
+    prefix: ""  # will be computed automatically.
+    user_prefix: ""
+    auto_prefix: "S${....task.env.spin_coef}_C${....task.env.contact_coef}_M${....task.env.main_coef}"#"Ent${.entropy_coef}_Axis_${....task.env.axis}_S${....task.env.spin_coef}_C${....task.env.contact_coef}"
+    multi_gpu: ${....multi_gpu}
+    ppo: True
+    mixed_precision: False
+    normalize_input: True 
+    normalize_value: True
+    value_bootstrap: True
+    num_actors: ${....task.env.numEnvs}
+    reward_shaper:
+      scale_value: 0.01
+    normalize_advantage: True
+    gamma: 0.99
+    tau: 0.95
+    learning_rate: 1e-4
+    lr_schedule: adaptive
+    schedule_type: standard
+    kl_threshold: 0.02
+    score_to_win: 100000
+    max_epochs: ${resolve_default:20100,${....max_iterations}}
+    save_best_after: 100
+    save_frequency: 100
+    print_stats: True
+    grad_norm: 1.0
+    entropy_coef: 0.0
+    truncate_grads: Trues
+    e_clip: 0.2
+    horizon_length: 16
+    minibatch_size: 32
+    mini_epochs: 4
+    critic_coef: 5
+    clip_value: True
+    seq_length: 4
+    bptt_len: 16
+    bounds_loss_coef: 0.005
+    bc_loss_coef: 0.01
+    weight_decay: 0.0
+    # Collect Trajectory
+    player_collect: False
+    player:
+      deterministic: True 
+      games_num: 2
+      games_repeat: 1
+      desired_games: 10000
+      print_stats: True
+
+    central_value_config:
+      minibatch_size: 32
+      mini_epochs: 4
+      learning_rate: 5e-4
+      lr_schedule: adaptive
+      schedule_type: standard
+      kl_threshold: 0.016
+      clip_value: True
+      normalize_input: True
+      truncate_grads: True
+
+      network:
+        name: actor_critic
+        central_value: True
+        mlp:
+          units: [512, 512, 256, 256]
+          activation: elu
+          d2rl: False
+          initializer:
+            name: default
+          regularizer:
+            name: None
+

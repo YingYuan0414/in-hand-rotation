@@ -1,0 +1,123 @@
+
+# Task name - used to pick the class to load
+task_name: ${task.name}
+# experiment name. defaults to name of training config
+experiment: ''
+
+# if set to positive integer, overrides the default number of environments
+num_envs: ''
+
+# add distillation config
+distill:
+  bc_training: False
+  warmup_mode: label
+  ablation_mode: multi-modality
+  teacher_data_dir: demonstration-baoding  
+  worker_id: 0
+  bc_warmup: True
+  teacher_logdir: runs
+  student_logdir: runs/student/new-no-vision
+  teacher_resume: baoding
+  student_resume: None
+  vidlogdir: 'video'
+  vid_log_step: 500
+  log_video: False
+  learn:
+    agent_name: natcnn_1cam
+    test: False
+    resume: 0
+    save_interval: 50 # check for potential saves every this many iterations
+    print_log: True
+    use_fake_done: True
+
+    # number of policy updates
+    max_iterations: 20000
+
+    # training params
+    bc_loss_coef: 1.0
+    lm_loss_coef: 0.0
+    cliprange: 0.2
+    ent_coef: 0  # 0.1
+    nsteps: 200
+    noptepochs: 5
+    nminibatches: 128 # this is per agent
+    batch_size: 8192
+    optim_stepsize: 5e-5  
+    weight_decay: 0
+    teacher_head_optim_stepsize_scale: 1
+    schedule: fixed 
+    gamma: 0.99
+    lam: 0.95
+    init_noise_std: 0.95
+    desired_kl: 0.008
+    log_interval: 1
+    max_grad_norm: 1.
+    distill_from_cpg: False
+    alternate_sampling: False
+    asymmetric: False
+
+    eval_env_nums: 512
+    value_loss_coef: 0  
+    surrogate_loss_coef: 0 
+    sampler: random
+    use_l1: False
+
+# seed - set to -1 to choose random seed
+seed: 42
+# set to True for deterministic performance
+torch_deterministic: False
+
+# set the maximum number of learning iterations to train for. overrides default per-environment setting
+max_iterations: ''
+
+## Device config
+#  'physx' or 'flex'
+physics_engine: 'physx'
+# whether to use cpu or gpu pipeline
+pipeline: 'gpu'
+# device for running physics simulation
+sim_device: 'cuda:0'
+# device to run RL
+rl_device: 'cuda:0'
+graphics_device_id: 0
+
+## PhysX arguments
+num_threads: 4 # Number of worker threads per scene used by PhysX - for CPU PhysX only.
+solver_type: 1 # 0: pgs, 1: tgs
+num_subscenes: 4 # Splits the simulation into N physics scenes and runs each one in a separate thread
+
+# RLGames Arguments
+# test - if set, run policy in inference mode (requires setting checkpoint to load)
+test: False
+# used to set checkpoint path
+checkpoint: ''
+# set to True to use multi-gpu horovod training
+multi_gpu: False
+
+wandb_activate: False
+wandb_group: ''
+wandb_name: ${train.params.config.name}
+wandb_entity: ''
+wandb_project: 'isaacgymenvs'
+capture_video: False
+capture_video_freq: 1464
+capture_video_len: 100
+force_render: True
+
+
+# disables rendering
+headless: False
+
+# set default task and default training config based on task
+defaults:
+  - task: Ant
+  - train: ${task}PPO
+  - hydra/job_logging: disabled
+
+# set the directory where the output files get saved
+hydra:
+  output_subdir: null
+  run:
+    dir: .
+
+player_action_savepath: './a.pth'

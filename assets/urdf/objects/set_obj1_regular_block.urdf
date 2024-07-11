@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<robot name="object">
+  <link name="object">
+    <visual>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/set2/set_obj1_regular_block.obj" scale=".03 .03 .03"/>
+      </geometry>
+    </visual>
+    <collision>
+  <origin xyz="0 0 0"/>
+  <geometry>
+    <mesh filename="meshes/set2/set_obj1_regular_block_0decompose.obj" scale=".03 .03 .03"/>
+<!--          <mesh filename="meshes/custom/obj0_ball.obj" scale=".05 .05 .05"/>-->
+  </geometry>
+</collision>
+
+<!--    <collision>-->
+<!--      <origin xyz="0 0 0"/>-->
+<!--      <geometry>-->
+<!--        <mesh filename="meshes/set2/set_obj1_regular_block.obj" scale=".03 .03 .03"/>-->
+<!--&lt;!&ndash;          <mesh filename="meshes/custom/obj0_ball.obj" scale=".05 .05 .05"/>&ndash;&gt;-->
+<!--      </geometry>-->
+<!--    </collision>-->
+    <inertial>
+      <density value="1000.0"/>
+    </inertial>
+  </link>
+</robot>
