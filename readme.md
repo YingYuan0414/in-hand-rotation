@@ -10,6 +10,12 @@ International Conference on Robotics and Automation (ICRA), 2024
 
 
 
+
+https://github.com/YingYuan0414/robosyn/assets/74405101/77c87802-59e7-43ac-afc1-330df13fb930
+
+
+
+
 ## Preparation
 
 We suggest using conda environment with python 3.8. Install **Isaac Gym Preview 4 release** on your laptop (should have a GPU) and server (follow the instructions on the NVIDIA's website, you need to register an account). Other required packages include **pytorch3d**, **hydra-core**, **ray**, **tensorboard**, **wandb**, etc. You may install them via **pip**.
