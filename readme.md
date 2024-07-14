@@ -116,3 +116,14 @@ Please cite this work as:
 	year = {2024}
 } 
 ```
+
+**Note** if you use [Rotating without Seeing](https://touchdexterity.github.io/) in your work, please ensure you cite the following work:
+```
+@article{
+      touch-dexterity,
+      title          = {Rotating without Seeing: Towards In-hand Dexterity through Touch },
+      author         = {Yin, Zhao-Heng and Huang, Binghao and Qin, Yuzhe and Chen, Qifeng and Wang, Xiaolong},
+      journal        = {Robotics: Science and Systems},
+      year           = {2023},
+}
+```
