@@ -40,6 +40,22 @@ from hydra.utils import to_absolute_path
 import gym
 import sys
 import os
+
+import numpy as np
+
+# Backwards compatibility for deps expecting deprecated numpy aliases.
+_DEPRECATED_NUMPY_ALIASES = {
+    "float": float,
+    "int": int,
+    "bool": bool,
+    "complex": complex,
+    "object": object,
+}
+
+for _alias, _target in _DEPRECATED_NUMPY_ALIASES.items():
+    if not hasattr(np, _alias):
+        setattr(np, _alias, _target)  # type: ignore[attr-defined]
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.reformat import omegaconf_to_dict, print_dict
